@@ -19,9 +19,9 @@
             scroll-behavior: smooth;
         }
         
-        /* Navigation Bar - Sky Blue Color */
+        /* Navigation Bar - White Color */
         .navbar {
-            background: linear-gradient(135deg, #87CEEB 0%, #4682B4 100%);
+            background: #ffffff !important;
             padding: 1rem 0;
             position: fixed;
             width: 100%;
@@ -45,56 +45,30 @@
             gap: 15px;
         }
         
-        .logo-icon {
-            font-size: 2rem;
-            color: white;
-            background: #2c3e50;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .logo-img {
+            height: 50px !important;
+            width: auto !important;
+            max-width: 180px !important;
         }
         
-        .logo-text {
-            color: white;
-        }
-        
-        .logo-main {
-            font-size: 1.8rem;
-            font-weight: bold;
-            display: block;
-        }
-        
-        .logo-subtitle {
-            font-size: 0.9rem;
-            opacity: 0.9;
-            margin-top: -3px;
-        }
-        
-        /* Mobile Menu Button */
+        /* Mobile Menu Button - Black Color */
         .mobile-menu-btn {
             display: none;
             background: none;
             border: none;
-            color: white;
+            color: #000000 !important;
             font-size: 1.5rem;
             cursor: pointer;
             padding: 5px;
         }
-       .logo-img {
-    height: 45px !important;
-    width: auto !important;
-    max-width: 120px !important;
-} 
+        
         .nav-links {
             display: flex;
             gap: 2rem;
         }
         
         .nav-links a {
-            color: white;
+            color: #333333 !important;
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s;
@@ -103,7 +77,7 @@
         }
         
         .nav-links a:hover {
-            background: rgba(255,255,255,0.2);
+            background: rgba(135, 206, 235, 0.2);
             transform: translateY(-2px);
         }
         
@@ -529,7 +503,7 @@
                 top: 100%;
                 left: 0;
                 right: 0;
-                background: linear-gradient(135deg, #87CEEB 0%, #4682B4 100%);
+                background: #ffffff;
                 flex-direction: column;
                 padding: 1rem;
                 box-shadow: 0 5px 15px rgba(0,0,0,0.2);
@@ -542,6 +516,7 @@
             .nav-links a {
                 margin: 0.5rem 0;
                 text-align: center;
+                color: #333333 !important;
             }
             
             .hero h1 {
@@ -572,12 +547,9 @@
         }
         
         @media (max-width: 480px) {
-            .logo-main {
-                font-size: 1.4rem;
-            }
-            
-            .logo-subtitle {
-                font-size: 0.8rem;
+            .logo-img {
+                height: 40px !important;
+                max-width: 150px !important;
             }
             
             .hero {
@@ -601,17 +573,14 @@
 <body>
     <!-- Navigation Bar -->
     <nav class="navbar">
-<div class="logo-container">
-    <!-- লোগো ইমেজ যোগ করুন -->
-    <img src="logo.png" alt="Skill Zone Logo" class="logo-img">
-    <div class="logo-text">
-        <div class="logo-main">SKILL ZONE</div>
-        <div class="logo-subtitle">with Noakhali</div>
-    </div>
-</div>
+        <div class="nav-container">
+            <div class="logo-container">
+                <!-- লোগো ইমেজ যোগ করুন -->
+                <img src="logo.png" alt="Skill Zone Logo" class="logo-img">
+            </div>
             
             <button class="mobile-menu-btn" onclick="toggleMenu()">
-                <i class="fas fa-bars"></i>
+                <i class="fas fa-bars" style="color: #000000;"></i>
             </button>
             
             <div class="nav-links" id="navLinks">
@@ -1103,10 +1072,10 @@
         window.addEventListener('scroll', function() {
             const navbar = document.querySelector('.navbar');
             if (window.scrollY > 100) {
-                navbar.style.background = 'rgba(135, 206, 235, 0.95)';
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
                 navbar.style.backdropFilter = 'blur(10px)';
             } else {
-                navbar.style.background = 'linear-gradient(135deg, #87CEEB 0%, #4682B4 100%)';
+                navbar.style.background = '#ffffff';
                 navbar.style.backdropFilter = 'none';
             }
         });
@@ -1145,6 +1114,48 @@
             // Scroll to top
             window.scrollTo(0, 0);
         }
+
+        // Browser back button handling
+        window.addEventListener('popstate', function(event) {
+            if (document.getElementById('serviceDetailPage').style.display === 'block') {
+                showHomePage();
+            }
+        });
+
+        // Update history when navigating to service details
+        function showServiceDetail(serviceId) {
+            document.getElementById('homePage').style.display = 'none';
+            document.getElementById('serviceDetailPage').style.display = 'block';
+            
+            // Hide all service details
+            const serviceDetails = document.querySelectorAll('#serviceDetailPage > div');
+            serviceDetails.forEach(service => {
+                service.style.display = 'none';
+            });
+            
+            // Show selected service detail
+            document.getElementById(serviceId).style.display = 'block';
+            
+            // Add to browser history
+            history.pushState({page: 'service'}, '', `#${serviceId}`);
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        function showHomePage() {
+            document.getElementById('homePage').style.display = 'block';
+            document.getElementById('serviceDetailPage').style.display = 'none';
+            
+            // Add to browser history
+            history.pushState({page: 'home'}, '', '#home');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Initialize history state
+        history.replaceState({page: 'home'}, '', '#home');
     </script>
 </body>
 </html>
