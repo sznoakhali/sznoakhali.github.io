@@ -121,18 +121,21 @@
             color: #333;
             font-size: 1.3rem;
             cursor: pointer;
-            padding: 8px;
-            border-radius: 50%;
+            padding: 8px 12px;
+            border-radius: 25px;
             transition: all 0.3s;
             margin-left: 1rem;
+            border: 2px solid #87CEEB;
         }
 
         .theme-toggle:hover {
             background: rgba(135, 206, 235, 0.2);
+            transform: translateY(-2px);
         }
 
         body.dark-theme .theme-toggle {
             color: #ffffff;
+            border-color: #87CEEB;
         }
         
         /* Mobile Menu Button - Black Color */
@@ -325,6 +328,7 @@
             background: white;
             border-radius: 15px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
         }
 
         body.dark-theme .bg-remover-container {
@@ -362,15 +366,19 @@
             gap: 2rem;
             justify-content: center;
             flex-wrap: wrap;
+            align-items: flex-start;
         }
 
         .preview-box {
             text-align: center;
+            flex: 1;
+            min-width: 300px;
         }
 
         .preview-box h4 {
             margin-bottom: 1rem;
             color: #2c3e50;
+            font-size: 1.2rem;
         }
 
         body.dark-theme .preview-box h4 {
@@ -378,10 +386,52 @@
         }
 
         .preview-img {
-            max-width: 300px;
+            max-width: 100%;
             max-height: 300px;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            object-fit: contain;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .new-image-btn {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .new-image-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+        }
+
+        .loading-spinner {
+            display: none;
+            font-size: 2rem;
+            color: #87CEEB;
+            margin: 1rem 0;
+        }
+
+        .loading-spinner i {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         
         /* Container */
@@ -803,6 +853,20 @@
                 flex-direction: column;
                 align-items: center;
             }
+
+            .preview-box {
+                min-width: 100%;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .action-buttons button {
+                width: 100%;
+                max-width: 300px;
+            }
         }
         
        @media (max-width: 480px) {
@@ -826,6 +890,11 @@
             .video-container iframe {
                 height: 200px;
             }
+
+            .theme-toggle {
+                padding: 6px 10px;
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
@@ -843,7 +912,7 @@
                 <a href="#tools">টুলস</a>
                 <a href="#contact">যোগাযোগ</a>
                 <button class="theme-toggle" id="themeToggle" title="থিম পরিবর্তন করুন">
-                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-moon"></i> থিম
                 </button>
             </div>
             
@@ -957,6 +1026,11 @@
                             <input type="file" id="imageInput" accept="image/*" style="display: none;">
                         </div>
 
+                        <div class="loading-spinner" id="loadingSpinner">
+                            <i class="fas fa-spinner"></i>
+                            <p>ব্যাকগ্রাউন্ড রিমুভ হচ্ছে... দয়া করে অপেক্ষা করুন</p>
+                        </div>
+
                         <div class="preview-container" id="previewContainer">
                             <div class="preview-images">
                                 <div class="preview-box">
@@ -968,9 +1042,15 @@
                                     <img id="removedBgImage" class="preview-img" alt="ব্যাকগ্রাউন্ড রিমুভ ছবি">
                                 </div>
                             </div>
-                            <button class="tool-btn" id="downloadBtn" style="margin-top: 2rem; display: none;">
-                                <i class="fas fa-download"></i> ছবি ডাউনলোড করুন
-                            </button>
+                            
+                            <div class="action-buttons">
+                                <button class="tool-btn" id="downloadBtn">
+                                    <i class="fas fa-download"></i> ছবি ডাউনলোড করুন
+                                </button>
+                                <button class="new-image-btn" id="newImageBtn">
+                                    <i class="fas fa-plus"></i> নতুন ছবি অ্যাড করুন
+                                </button>
+                            </div>
                         </div>
 
                         <div style="text-align: center; margin-top: 1rem;">
@@ -1112,13 +1192,15 @@
     </a>
 
     <script>
+        // Remove.bg API Key
+        const REMOVE_BG_API_KEY = '8zMAt3Mt9N8z4wX75sRP7Uyh';
+
         // Theme Toggle Functionality
         const themeToggle = document.getElementById('themeToggle');
         const themeIcon = themeToggle.querySelector('i');
 
-        // Check for saved theme preference or prefer OS theme
-        const savedTheme = localStorage.getItem('theme') || 
-                          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme') || 'light';
         
         if (savedTheme === 'dark') {
             document.body.classList.add('dark-theme');
@@ -1147,6 +1229,10 @@
         const originalImage = document.getElementById('originalImage');
         const removedBgImage = document.getElementById('removedBgImage');
         const downloadBtn = document.getElementById('downloadBtn');
+        const newImageBtn = document.getElementById('newImageBtn');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+
+        let currentImageUrl = null;
 
         uploadArea.addEventListener('click', () => {
             imageInput.click();
@@ -1179,7 +1265,29 @@
             }
         });
 
-        function handleImageUpload(file) {
+        newImageBtn.addEventListener('click', resetBackgroundRemover);
+
+        function resetBackgroundRemover() {
+            // Clear previous images
+            originalImage.src = '';
+            removedBgImage.src = '';
+            
+            // Reset UI
+            previewContainer.style.display = 'none';
+            loadingSpinner.style.display = 'none';
+            uploadArea.style.display = 'block';
+            
+            // Clear file input
+            imageInput.value = '';
+            
+            // Clean up previous URL if exists
+            if (currentImageUrl) {
+                URL.revokeObjectURL(currentImageUrl);
+                currentImageUrl = null;
+            }
+        }
+
+        async function handleImageUpload(file) {
             if (!file.type.match('image.*')) {
                 alert('দয়া করে শুধুমাত্র ছবি ফাইল আপলোড করুন।');
                 return;
@@ -1190,37 +1298,107 @@
                 return;
             }
 
+            // Show original image
             const reader = new FileReader();
             reader.onload = function(e) {
                 originalImage.src = e.target.result;
-                previewContainer.style.display = 'block';
+                uploadArea.style.display = 'none';
+                loadingSpinner.style.display = 'block';
+                previewContainer.style.display = 'none';
                 
-                // Simulate background removal (in real implementation, you'd use an API)
-                simulateBackgroundRemoval(e.target.result);
+                // Remove background using API
+                removeBackground(file);
             };
             reader.readAsDataURL(file);
         }
 
-        function simulateBackgroundRemoval(imageSrc) {
-            // This is a simulation - in real implementation, you'd call a background removal API
-            removedBgImage.src = imageSrc;
-            downloadBtn.style.display = 'inline-block';
-            
-            // Show processing message
-            removedBgImage.alt = 'প্রসেসিং...';
-            setTimeout(() => {
-                removedBgImage.alt = 'ব্যাকগ্রাউন্ড রিমুভ ছবি';
-                alert('ব্যাকগ্রাউন্ড সফলভাবে রিমুভ করা হয়েছে! এখন আপনি ছবিটি ডাউনলোড করতে পারেন।');
-            }, 1500);
+        async function removeBackground(imageFile) {
+            try {
+                const formData = new FormData();
+                formData.append('image_file', imageFile);
+                
+                const response = await fetch('https://api.remove.bg/v1.0/removebg', {
+                    method: 'POST',
+                    headers: {
+                        'X-Api-Key': REMOVE_BG_API_KEY
+                    },
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.errors ? errorData.errors[0].title : 'Background removal failed');
+                }
+
+                const blob = await response.blob();
+                currentImageUrl = URL.createObjectURL(blob);
+                
+                // Show results
+                removedBgImage.src = currentImageUrl;
+                loadingSpinner.style.display = 'none';
+                previewContainer.style.display = 'block';
+                
+                // Setup download button
+                downloadBtn.onclick = () => {
+                    const link = document.createElement('a');
+                    link.download = `background-removed-${Date.now()}.png`;
+                    link.href = currentImageUrl;
+                    link.click();
+                };
+
+                // Success notification
+                showNotification('ব্যাকগ্রাউন্ড সফলভাবে রিমুভ করা হয়েছে!', 'success');
+                
+            } catch (error) {
+                console.error('Error:', error);
+                loadingSpinner.style.display = 'none';
+                uploadArea.style.display = 'block';
+                showNotification('ব্যাকগ্রাউন্ড রিমুভ করতে সমস্যা হয়েছে। দয়া করে আবার চেষ্টা করুন।', 'error');
+            }
         }
 
-        downloadBtn.addEventListener('click', () => {
-            // Create a temporary link to download the image
-            const link = document.createElement('a');
-            link.download = 'background-removed-image.png';
-            link.href = removedBgImage.src;
-            link.click();
-        });
+        function showNotification(message, type) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: ${type === 'success' ? '#28a745' : '#dc3545'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 5px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                z-index: 10000;
+                max-width: 300px;
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Add CSS for notifications
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
 
         // Existing JavaScript functions (keep all your existing functions)
         // Mobile Menu Toggle
