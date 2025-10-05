@@ -13,21 +13,43 @@
             font-family: 'Arial', sans-serif;
         }
         
-        body {
-            line-height: 1.6;
-            color: #333;
-            scroll-behavior: smooth;
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #333;
+            --nav-bg: #ffffff;
+            --section-bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --border-color: #eee;
+            --shadow: rgba(0,0,0,0.1);
         }
         
-        /* Navigation Bar - White Color */
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --text-color: #e0e0e0;
+            --nav-bg: #2d2d2d;
+            --section-bg: #252525;
+            --card-bg: #2d2d2d;
+            --border-color: #404040;
+            --shadow: rgba(0,0,0,0.3);
+        }
+        
+        body {
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            scroll-behavior: smooth;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
         .navbar {
-            background: #ffffff !important;
+            background: var(--nav-bg) !important;
             padding: 1rem 0;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 15px var(--shadow);
+            transition: background-color 0.3s ease;
         }
         
         .nav-container {
@@ -45,18 +67,43 @@
             gap: 15px;
         }
         
-.logo-img {
-    width: 200px !important;  /* Exact width 200px */
-    height: 70px !important;  /* Exact height 70px */
-    object-fit: contain;      /* Maintain aspect ratio */
-}
+        .logo-img {
+            width: 200px !important;
+            height: 70px !important;
+            object-fit: contain;
+        }
         
-        /* Mobile Menu Button - Black Color */
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .theme-toggle {
+            background: none;
+            border: 2px solid var(--text-color);
+            color: var(--text-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            background: rgba(135, 206, 235, 0.2);
+        }
+        
         .mobile-menu-btn {
             display: none;
             background: none;
             border: none;
-            color: #000000 !important;
+            color: var(--text-color) !important;
             font-size: 1.5rem;
             cursor: pointer;
             padding: 5px;
@@ -68,7 +115,7 @@
         }
         
         .nav-links a {
-            color: #333333 !important;
+            color: var(--text-color) !important;
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s;
@@ -81,7 +128,6 @@
             transform: translateY(-2px);
         }
         
-        /* Hero Section */
         .hero {
             background: linear-gradient(135deg, #87CEEB 0%, #4682B4 100%);
             color: white;
@@ -138,17 +184,15 @@
             box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
         }
         
-        /* Container */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 2rem;
         }
         
-        /* Services Section */
         .services {
             padding: 80px 0;
-            background: #f8f9fa;
+            background: var(--section-bg);
         }
         
         .section-title {
@@ -158,12 +202,13 @@
         
         .section-title h2 {
             font-size: 2.5rem;
-            color: #2c3e50;
+            color: var(--text-color);
             margin-bottom: 1rem;
         }
         
         .section-title p {
-            color: #666;
+            color: var(--text-color);
+            opacity: 0.8;
             font-size: 1.1rem;
             max-width: 600px;
             margin: 0 auto;
@@ -176,13 +221,13 @@
         }
         
         .service-card {
-            background: white;
+            background: var(--card-bg);
             padding: 2rem;
             border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 20px var(--shadow);
             text-align: center;
             transition: all 0.3s;
-            border: 1px solid #eee;
+            border: 1px solid var(--border-color);
             position: relative;
             overflow: hidden;
             cursor: pointer;
@@ -200,24 +245,182 @@
         
         .service-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 15px 30px var(--shadow);
         }
         
         .service-card h3 {
-            color: #2c3e50;
+            color: var(--text-color);
             margin-bottom: 1rem;
             font-size: 1.4rem;
         }
         
         .service-card p {
-            color: #666;
+            color: var(--text-color);
+            opacity: 0.8;
             line-height: 1.6;
         }
         
-        /* Service Detail Page */
+        .video-downloader {
+            padding: 80px 0;
+            background: var(--bg-color);
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .tool-card {
+            background: var(--card-bg);
+            padding: 2.5rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px var(--shadow);
+            text-align: center;
+            transition: all 0.3s;
+            border: 2px solid var(--border-color);
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px var(--shadow);
+            border-color: #87CEEB;
+        }
+        
+        .tool-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        
+        .tool-card.facebook .tool-icon {
+            color: #1877F2;
+        }
+        
+        .tool-card.tiktok .tool-icon {
+            background: linear-gradient(135deg, #69C9D0 0%, #EE1D52 50%, #000000 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .tool-card h3 {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+        
+        .tool-card p {
+            color: var(--text-color);
+            opacity: 0.7;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .tool-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #87CEEB 0%, #4682B4 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(135, 206, 235, 0.3);
+        }
+        
+        .tool-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(135, 206, 235, 0.5);
+        }
+        
+        .bg-remover {
+            padding: 80px 0;
+            background: var(--section-bg);
+        }
+        
+        .bg-remover-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px var(--shadow);
+            text-align: center;
+        }
+        
+        .upload-area {
+            border: 3px dashed var(--border-color);
+            border-radius: 15px;
+            padding: 3rem 2rem;
+            margin: 2rem 0;
+            transition: all 0.3s;
+            cursor: pointer;
+            background: var(--section-bg);
+        }
+        
+        .upload-area:hover {
+            border-color: #87CEEB;
+            background: rgba(135, 206, 235, 0.05);
+        }
+        
+        .upload-area i {
+            font-size: 4rem;
+            color: #87CEEB;
+            margin-bottom: 1rem;
+        }
+        
+        .upload-area p {
+            color: var(--text-color);
+            opacity: 0.7;
+            font-size: 1.1rem;
+        }
+        
+        .upload-area small {
+            display: block;
+            margin-top: 0.5rem;
+            color: var(--text-color);
+            opacity: 0.5;
+        }
+        
+        #imageInput {
+            display: none;
+        }
+        
+        #previewContainer {
+            margin-top: 2rem;
+            display: none;
+        }
+        
+        #preview {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px var(--shadow);
+        }
+        
+        .process-btn {
+            background: linear-gradient(135deg, #87CEEB 0%, #4682B4 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            margin-top: 1.5rem;
+        }
+        
+        .process-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(135, 206, 235, 0.5);
+        }
+        
         .service-detail {
             padding: 120px 0 80px;
-            background: white;
+            background: var(--bg-color);
         }
         
         .service-header {
@@ -227,12 +430,13 @@
         
         .service-header h1 {
             font-size: 2.5rem;
-            color: #2c3e50;
+            color: var(--text-color);
             margin-bottom: 1rem;
         }
         
         .service-header p {
-            color: #666;
+            color: var(--text-color);
+            opacity: 0.8;
             font-size: 1.1rem;
             max-width: 800px;
             margin: 0 auto;
@@ -243,7 +447,7 @@
             margin: 0 auto 3rem;
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px var(--shadow);
         }
         
         .video-container iframe {
@@ -258,7 +462,7 @@
         }
         
         .service-content h2 {
-            color: #2c3e50;
+            color: var(--text-color);
             margin-bottom: 1.5rem;
             font-size: 1.8rem;
         }
@@ -266,7 +470,8 @@
         .service-content p {
             margin-bottom: 1.5rem;
             line-height: 1.7;
-            color: #555;
+            color: var(--text-color);
+            opacity: 0.9;
         }
         
         .benefits-list {
@@ -274,7 +479,7 @@
         }
         
         .benefit-item {
-            background: #f8f9fa;
+            background: var(--section-bg);
             padding: 1.5rem;
             border-radius: 10px;
             margin-bottom: 1rem;
@@ -282,9 +487,14 @@
         }
         
         .benefit-item h3 {
-            color: #2c3e50;
+            color: var(--text-color);
             margin-bottom: 0.5rem;
             font-size: 1.2rem;
+        }
+        
+        .benefit-item p {
+            color: var(--text-color);
+            opacity: 0.8;
         }
         
         .service-list {
@@ -294,9 +504,10 @@
         
         .service-list li {
             padding: 0.8rem 0;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--border-color);
             display: flex;
             align-items: center;
+            color: var(--text-color);
         }
         
         .service-list li:before {
@@ -323,19 +534,18 @@
             transform: translateY(-2px);
         }
         
-        /* Contact Section */
         .contact {
             padding: 80px 0;
-            background: white;
+            background: var(--bg-color);
         }
         
         .contact-form {
             max-width: 600px;
             margin: 0 auto;
-            background: #f8f9fa;
+            background: var(--card-bg);
             padding: 2rem;
             border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 20px var(--shadow);
         }
         
         .form-group {
@@ -345,7 +555,7 @@
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            color: #333;
+            color: var(--text-color);
             font-weight: 500;
         }
         
@@ -353,10 +563,12 @@
         .form-group textarea {
             width: 100%;
             padding: 12px;
-            border: 1px solid #ddd;
+            border: 1px solid var(--border-color);
             border-radius: 8px;
             font-size: 1rem;
             transition: all 0.3s;
+            background: var(--bg-color);
+            color: var(--text-color);
         }
         
         .form-group input:focus,
@@ -371,7 +583,6 @@
             resize: vertical;
         }
         
-        /* Contact Info Box */
         .contact-info {
             background: linear-gradient(135deg, #87CEEB 0%, #4682B4 100%);
             color: white;
@@ -400,7 +611,6 @@
             color: white;
         }
         
-        /* Footer - Black Color with White Text */
         footer {
             background: #000000;
             color: white;
@@ -459,7 +669,6 @@
             color: #87CEEB;
         }
         
-        /* WhatsApp Floating Button */
         .whatsapp-float {
             position: fixed;
             bottom: 25px;
@@ -491,7 +700,6 @@
             100% { transform: scale(1); }
         }
         
-        /* Responsive Design */
         @media (max-width: 768px) {
             .mobile-menu-btn {
                 display: block;
@@ -503,10 +711,10 @@
                 top: 100%;
                 left: 0;
                 right: 0;
-                background: #ffffff;
+                background: var(--nav-bg);
                 flex-direction: column;
                 padding: 1rem;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                box-shadow: 0 5px 15px var(--shadow);
             }
             
             .nav-links.active {
@@ -516,7 +724,6 @@
             .nav-links a {
                 margin: 0.5rem 0;
                 text-align: center;
-                color: #333333 !important;
             }
             
             .hero h1 {
@@ -528,7 +735,7 @@
                 padding: 0 1rem;
             }
             
-            .services-grid {
+            .services-grid, .tools-grid {
                 grid-template-columns: 1fr;
             }
             
@@ -544,13 +751,17 @@
             .service-header h1 {
                 font-size: 2rem;
             }
+            
+            .bg-remover-container {
+                padding: 2rem 1rem;
+            }
         }
         
-       @media (max-width: 480px) {
-    .logo-img {
-        width: 160px !important;  /* Smaller for mobile */
-        height: 56px !important;   /* Maintain 200/70 ratio */
-    }
+        @media (max-width: 480px) {
+            .logo-img {
+                width: 160px !important;
+                height: 56px !important;
+            }
             
             .hero {
                 padding: 150px 0 80px;
@@ -571,29 +782,31 @@
     </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo-container">
-                <!-- লোগো ইমেজ যোগ করুন -->
                 <img src="logo.png" alt="Skill Zone Logo" class="logo-img">
             </div>
             
-            <button class="mobile-menu-btn" onclick="toggleMenu()">
-                <i class="fas fa-bars" style="color: #000000;"></i>
-            </button>
-            
-            <div class="nav-links" id="navLinks">
-                <a href="#home">হোম</a>
-                <a href="#services">সেবাসমূহ</a>
-                <a href="#contact">যোগাযোগ</a>
+            <div class="nav-right">
+                <button class="theme-toggle" onclick="toggleTheme()" title="থিম পরিবর্তন করুন">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                </button>
+                
+                <button class="mobile-menu-btn" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <div class="nav-links" id="navLinks">
+                    <a href="#home" onclick="showHomePage()">হোম</a>
+                    <a href="#services" onclick="showHomePage()">সেবাসমূহ</a>
+                    <a href="#contact" onclick="showHomePage()">যোগাযোগ</a>
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- Home Page Content -->
     <div id="homePage">
-        <!-- Hero Section -->
         <section id="home" class="hero">
             <div class="container">
                 <div class="hero-content">
@@ -604,7 +817,6 @@
             </div>
         </section>
 
-        <!-- Services Section -->
         <section id="services" class="services">
             <div class="container">
                 <div class="section-title">
@@ -646,516 +858,13 @@
             </div>
         </section>
 
-        <!-- Contact Section -->
-        <section id="contact" class="contact">
+        <section class="video-downloader">
             <div class="container">
                 <div class="section-title">
-                    <h2>যোগাযোগ করুন</h2>
-                    <p>আমাদের সাথে কাজ করতে চাইলে নিচের ফর্মটি পূরণ করুন</p>
+                    <h2>ভিডিও ডাউনলোডার</h2>
+                    <p>ফেসবুক ও টিকটক থেকে সহজে ভিডিও ডাউনলোড করুন</p>
                 </div>
                 
-                <div class="contact-form">
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <label for="name">আপনার নাম</label>
-                            <input type="text" id="name" name="name" required placeholder="আপনার পুরো নাম লিখুন">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="email">ইমেইল ঠিকানা</label>
-                            <input type="email" id="email" name="email" required placeholder="আপনার ইমেইল ঠিকানা">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="phone">ফোন নম্বর</label>
-                            <input type="tel" id="phone" name="phone" placeholder="আপনার ফোন নম্বর">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="message">আপনার মেসেজ</label>
-                            <textarea id="message" name="message" required placeholder="আপনার প্রয়োজনীয়তা বিস্তারিত লিখুন..."></textarea>
-                        </div>
-                        
-                        <button type="submit" class="btn" style="width: 100%;">মেসেজ পাঠান</button>
-                    </form>
-                </div>
-                
-                <!-- Contact Info Box -->
-                <div class="contact-info">
-                    <h3>সরাসরি যোগাযোগ করুন</h3>
-                    <p><i class="fas fa-envelope"></i> ইমেইল: <a href="mailto:skillzonenoakhali@gmail.com">skillzonenoakhali@gmail.com</a></p>
-                    <p><i class="fab fa-whatsapp"></i> হোয়াটসঅ্যাপ: <a href="https://wa.me/8801765486142" target="_blank">01765486142</a></p>
-                    <p><i class="fas fa-map-marker-alt"></i> ঠিকানা: সদর, নোয়াখালী, বাংলাদেশ</p>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- Service Detail Pages -->
-    <div id="serviceDetailPage" style="display: none;">
-        <!-- Web Design Service Detail -->
-        <div id="web-design" class="service-detail">
-            <div class="container">
-                <div class="service-header">
-                    <h1>ওয়েবসাইট ডিজাইন ও ডেভেলপমেন্ট</h1>
-                    <p>আপনার ব্যবসার জন্য আধুনিক, রেস্পন্সিভ এবং কার্যকরী ওয়েবসাইট তৈরি করুন</p>
-                </div>
-                
-                <div class="video-container">
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/BoYCpBlujzE?si=javpRKtFK6BUsczj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                </div>
-                
-                <div class="service-content">
-                    <h2>কেন ব্যবসার জন্য একটি ওয়েবসাইট দরকার?</h2>
-                    
-                    <div class="benefits-list">
-                        <div class="benefit-item">
-                            <h3>২৪/৭ খোলা দোকান 🕒</h3>
-                            <p>আপনার ওয়েবসাইট সবসময় চালু থাকে। গ্রাহকরা যেকোনো সময় আপনার ব্যবসা সম্পর্কে জানতে পারে, অর্ডার করতে পারে, বা যোগাযোগ করতে পারে।</p>
-                        </div>
-                        
-                        <div class="benefit-item">
-                            <h3>বিশ্বাসযোগ্যতা ও আস্থা তৈরি করে 🤝</h3>
-                            <p>বর্তমান যুগে ওয়েবসাইট না থাকলে অনেকেই ব্যবসাকে সিরিয়াস মনে করে না। একটি প্রফেশনাল ওয়েবসাইট আপনার ব্র্যান্ডকে আরও বিশ্বাসযোগ্য করে তোলে।</p>
-                        </div>
-                        
-                        <div class="benefit-item">
-                            <h3>বড় অডিয়েন্সে পৌঁছানোর সুযোগ 🌍</h3>
-                            <p>দোকান বা অফিসে সীমাবদ্ধ না থেকে, ওয়েবসাইটের মাধ্যমে সারা দেশ এমনকি বিদেশের মানুষও আপনার পণ্য ও সার্ভিস দেখতে পারে।</p>
-                        </div>
-                        
-                        <div class="benefit-item">
-                            <h3>ব্র্যান্ড ইমেজ ও পরিচিতি বৃদ্ধি 🚀</h3>
-                            <p>ওয়েবসাইট আপনার ব্যবসার পরিচয় বহন করে। সুন্দর ডিজাইন ও তথ্যপূর্ণ কনটেন্ট ব্র্যান্ডকে আরও শক্তিশালী করে।</p>
-                        </div>
-                        
-                        <div class="benefit-item">
-                            <h3>সহজে মার্কেটিং করা যায় 📢</h3>
-                            <p>ওয়েবসাইট থাকলে SEO, ফেসবুক/গুগল অ্যাডস বা সোশ্যাল মিডিয়া মার্কেটিং এর মাধ্যমে গ্রাহকদের দ্রুত টার্গেট করা যায়।</p>
-                        </div>
-                        
-                        <div class="benefit-item">
-                            <h3>বিক্রি ও মুনাফা বাড়ায় 💰</h3>
-                            <p>গ্রাহকরা সহজে প্রোডাক্ট দেখে, তথ্য পায় এবং অনলাইনে কিনতে পারে। এতে বিক্রি স্বাভাবিকভাবেই বাড়ে।</p>
-                        </div>
-                        
-                        <div class="benefit-item">
-                            <h3>প্রতিযোগিতায় এগিয়ে থাকতে সাহায্য করে 🏆</h3>
-                            <p>বাজারে টিকে থাকতে হলে আপনাকে আলাদা হতে হবে। ওয়েবসাইট সেই সুবিধা এনে দেয়।</p>
-                        </div>
-                    </div>
-                    
-                    <a href="#" class="back-btn" onclick="showHomePage()"><i class="fas fa-arrow-left"></i> সেবাসমূহে ফিরে যান</a>
-                </div>
-            </div>
-        </div>
-        
-        <!-- SEO Service Detail -->
-        <div id="seo" class="service-detail">
-            <div class="container">
-                <div class="service-header">
-                    <h1>এসইও সার্ভিস (Search Engine Optimization)</h1>
-                    <p>আপনার ওয়েবসাইটকে গুগলসহ অন্যান্য সার্চ ইঞ্জিনে উপরের দিকে আনুন</p>
-                </div>
-                
-                <div class="video-container">
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/e2LM7UEzRA4?si=IwLoMVMK7UomXT4J" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                </div>
-                
-                <div class="service-content">
-                    <h2>🔎 SEO (Search Engine Optimization) কী?</h2>
-                    <p>SEO হলো আপনার ওয়েবসাইটকে গুগলসহ অন্যান্য সার্চ ইঞ্জিনে উপরের দিকে আনার প্রক্রিয়া। যাতে আপনার প্রোডাক্ট বা সার্ভিস খুঁজলে কাস্টমাররা সবার আগে আপনার ওয়েবসাইটটাই দেখতে পায়।</p>
-                    
-                    <h2>🚀 কেন SEO জরুরী?</h2>
-                    
-                    <ul class="service-list">
-                        <li>বিনামূল্যে ভিজিটর – বিজ্ঞাপন ছাড়াই অর্গানিক ট্রাফিক আসে</li>
-                        <li>ব্র্যান্ড ভ্যালু বৃদ্ধি – সার্চ রেজাল্টে উপরে থাকলে কাস্টমারের বিশ্বাস বাড়ে</li>
-                        <li>সেলস ও লিড বৃদ্ধি – বেশি ভিজিটর মানেই বেশি সম্ভাব্য কাস্টমার</li>
-                        <li>লং-টার্ম রেজাল্ট – একবার করা SEO-এর প্রভাব অনেকদিন থাকে</li>
-                        <li>কস্ট-ইফেক্টিভ – বিজ্ঞাপনের তুলনায় খরচ অনেক কম</li>
-                    </ul>
-                    
-                    <h2>📊 আমাদের SEO সার্ভিসে যা পাবেন</h2>
-                    
-                    <ul class="service-list">
-                        <li>কীওয়ার্ড রিসার্চ</li>
-                        <li>অন-পেজ অপ্টিমাইজেশন</li>
-                        <li>অফ-পেজ অপ্টিমাইজেশন</li>
-                        <li>টেকনিক্যাল SEO</li>
-                        <li>কনটেন্ট অপ্টিমাইজেশন</li>
-                        <li>মাসিক রিপোর্ট ও অ্যানালাইসিস</li>
-                    </ul>
-                    
-                    <h2>💡 কেন আমাদের বেছে নেবেন?</h2>
-                    <p>আমরা আপনার ওয়েবসাইটকে শুধু গুগলে উপরে তুলব না, বরং আপনার বিজনেসকে আরও বড় অডিয়েন্সের সামনে পৌঁছে দেব।</p>
-                    
-                    <a href="#" class="back-btn" onclick="showHomePage()"><i class="fas fa-arrow-left"></i> সেবাসমূহে ফিরে যান</a>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Social Media Marketing Service Detail -->
-        <div id="social-media" class="service-detail">
-            <div class="container">
-                <div class="service-header">
-                    <h1>সোশ্যাল মিডিয়া মার্কেটিং</h1>
-                    <p>ফেসবুক, ইনস্টাগ্রাম, ইউটিউব, টিকটক, লিঙ্কডইনসহ বিভিন্ন প্ল্যাটফর্মে আপনার ব্যবসা বা ব্র্যান্ডকে প্রচার করুন</p>
-                </div>
-                
-                <div class="video-container">
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/e-JpKdYeGKE?si=xoqcJMlt-h6o4ptZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                </div>
-                
-                <div class="service-content">
-                    <h2>সোশ্যাল মিডিয়া মার্কেটিং (SMM) কী?</h2>
-                    <p>সোশ্যাল মিডিয়া মার্কেটিং হলো ফেসবুক, ইনস্টাগ্রাম, ইউটিউব, টিকটক, লিঙ্কডইনসহ বিভিন্ন প্ল্যাটফর্মে আপনার ব্যবসা বা ব্র্যান্ডকে প্রচার করার প্রক্রিয়া। এর মাধ্যমে আপনি টার্গেট কাস্টমারের কাছে সরাসরি পৌঁছাতে পারবেন।</p>
-                    
-                    <h2>🚀 কেন সোশ্যাল মিডিয়া মার্কেটিং জরুরী?</h2>
-                    
-                    <ul class="service-list">
-                        <li>বেশি মানুষকে পৌঁছানো – কোটি কোটি মানুষ প্রতিদিন সোশ্যাল মিডিয়া ব্যবহার করে</li>
-                        <li>ব্র্যান্ড সচেতনতা বৃদ্ধি – আপনার ব্র্যান্ড দ্রুত মানুষের মনে জায়গা করে নেবে</li>
-                        <li>টার্গেটেড কাস্টমার – নির্দিষ্ট বয়স, লোকেশন বা ইন্টারেস্ট অনুযায়ী বিজ্ঞাপন দেওয়া যায়</li>
-                        <li>সেলস ও লিড বৃদ্ধি – সোশ্যাল মিডিয়া থেকেই সরাসরি কাস্টমার আনা সম্ভব</li>
-                        <li>কম খরচে মার্কেটিং – প্রচলিত বিজ্ঞাপনের তুলনায় অনেক সস্তা এবং কার্যকর</li>
-                    </ul>
-                    
-                    <h2>📊 আমাদের সোশ্যাল মিডিয়া মার্কেটিং সার্ভিসে যা পাবেন</h2>
-                    
-                    <ul class="service-list">
-                        <li>ফেসবুক ও ইনস্টাগ্রাম অ্যাড ম্যানেজমেন্ট</li>
-                        <li>ব্র্যান্ড পেজ সেটআপ ও অপ্টিমাইজেশন</li>
-                        <li>কনটেন্ট ক্রিয়েশন (পোস্ট, ভিডিও, গ্রাফিক্স)</li>
-                        <li>টার্গেটেড অ্যাড ক্যাম্পেইন</li>
-                        <li>মাসিক রিপোর্ট ও অ্যানালাইসিস</li>
-                        <li>কাস্টমার এঙ্গেজমেন্ট স্ট্রাটেজি</li>
-                    </ul>
-                    
-                    <a href="#" class="back-btn" onclick="showHomePage()"><i class="fas fa-arrow-left"></i> সেবাসমূহে ফিরে যান</a>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Content Marketing Service Detail -->
-        <div id="content-marketing" class="service-detail">
-            <div class="container">
-                <div class="service-header">
-                    <h1>কনটেন্ট মার্কেটিং</h1>
-                    <p>তথ্যবহুল, আকর্ষণীয় ও মানসম্মত কনটেন্ট তৈরি করে কাস্টমারের কাছে পৌঁছান</p>
-                </div>
-                
-                <div class="video-container">
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/cDwOuSrBDmo?si=2_KwzFh1E7mYlmwl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                </div>
-                
-                <div class="service-content">
-                    <h2>কনটেন্ট মার্কেটিং (Content Marketing) কী?</h2>
-                    <p>কনটেন্ট মার্কেটিং হলো তথ্যবহুল, আকর্ষণীয় ও মানসম্মত কনটেন্ট (যেমন ব্লগ, আর্টিকেল, ভিডিও, ইনফোগ্রাফিক, সোশ্যাল মিডিয়া পোস্ট) তৈরি ও শেয়ার করার মাধ্যমে কাস্টমারের কাছে পৌঁছানোর একটি কার্যকর পদ্ধতি। এটি শুধু প্রোডাক্ট বিক্রি নয়, বরং কাস্টমারের সঙ্গে সম্পর্ক তৈরি করে এবং তাদের আস্থা বাড়ায়।</p>
-                    
-                    <h2>🚀 কেন কনটেন্ট মার্কেটিং জরুরী?</h2>
-                    
-                    <ul class="service-list">
-                        <li>বিশ্বাস তৈরি করে – মানসম্মত কনটেন্ট কাস্টমারের চোখে আপনার ব্র্যান্ডকে অথরিটি হিসেবে তুলে ধরে</li>
-                        <li>অর্গানিক ভিজিটর আনে – SEO-ফ্রেন্ডলি কনটেন্ট সার্চ ইঞ্জিন থেকে বেশি ট্রাফিক আনে</li>
-                        <li>কাস্টমার এঙ্গেজমেন্ট বাড়ায় – আকর্ষণীয় কনটেন্ট কাস্টমারকে আপনার ব্র্যান্ডের সঙ্গে যুক্ত রাখে</li>
-                        <li>সেলস বাড়াতে সাহায্য করে – সঠিক কনটেন্ট কাস্টমারকে প্রোডাক্ট কেনার দিকে উৎসাহিত করে</li>
-                        <li>লং-টার্ম রেজাল্ট দেয় – একবার করা কনটেন্ট দীর্ঘদিন ধরে ভিজিটর আনতে থাকে</li>
-                    </ul>
-                    
-                    <h2>📊 আমাদের কনটেন্ট মার্কেটিং সার্ভিসে যা পাবেন</h2>
-                    
-                    <ul class="service-list">
-                        <li>ব্লগ ও আর্টিকেল রাইটিং</li>
-                        <li>ভিডিও কনটেন্ট ক্রিয়েশন</li>
-                        <li>ইনফোগ্রাফিক ও ভিজ্যুয়াল কনটেন্ট ডিজাইন</li>
-                        <li>সোশ্যাল মিডিয়া কনটেন্ট পরিকল্পনা ও ম্যানেজমেন্ট</li>
-                        <li>SEO-ফ্রেন্ডলি কনটেন্ট অপ্টিমাইজেশন</li>
-                        <li>পারফরমেন্স রিপোর্ট ও অ্যানালাইসিস</li>
-                    </ul>
-                    
-                    <a href="#" class="back-btn" onclick="showHomePage()"><i class="fas fa-arrow-left"></i> সেবাসমূহে ফিরে যান</a>
-                </div>
-            </div>
-        </div>
-        
-        <!-- E-commerce Solution Service Detail -->
-        <div id="ecommerce" class="service-detail">
-            <div class="container">
-                <div class="service-header">
-                    <h1>ই-কমার্স সলিউশন</h1>
-                    <p>আপনার ব্যবসাকে অনলাইনে নিয়ে আসার জন্য পূর্ণাঙ্গ প্রযুক্তিগত ব্যবস্থা</p>
-                </div>
-                
-                <div class="video-container">
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/TrsWIP4uYVo?si=VJxf2mHkB2wYDtgr" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                </div>
-                
-                <div class="service-content">
-                    <h2>ই-কমার্স সলিউশন কী?</h2>
-                    <p>ই-কমার্স সলিউশন হলো আপনার ব্যবসাকে অনলাইনে নিয়ে আসার জন্য পূর্ণাঙ্গ প্রযুক্তিগত ব্যবস্থা। এখানে ওয়েবসাইট, অনলাইন শপ, প্রোডাক্ট ম্যানেজমেন্ট, পেমেন্ট গেটওয়ে, কুরিয়ার ইন্টিগ্রেশন এবং কাস্টমার ম্যানেজমেন্ট সিস্টেম অন্তর্ভুক্ত থাকে। অর্থাৎ, ই-কমার্স সলিউশন মানেই হলো আপনার দোকানকে ডিজিটাল জগতে রূপান্তর করা।</p>
-                    
-                    <h2>🚀 কেন ই-কমার্স সলিউশন জরুরী?</h2>
-                    
-                    <ul class="service-list">
-                        <li>২৪/৭ অনলাইন শপ – গ্রাহক যেকোন সময় অর্ডার দিতে পারবে</li>
-                        <li>বৃহৎ মার্কেটপ্লেস – আপনার ব্যবসা শুধু লোকাল না, দেশ-বিদেশেও পৌঁছাবে</li>
-                        <li>কাস্টমার এক্সপেরিয়েন্স উন্নত করে – সহজ অর্ডার, ট্র্যাকিং ও পেমেন্ট সিস্টেম</li>
-                        <li>বিক্রি বাড়ায় – অনলাইনে বেশি ভিজিটর মানেই বেশি সেলস</li>
-                        <li>প্রতিযোগিতায় এগিয়ে রাখে – আপনার প্রতিদ্বন্দ্বী যখন অনলাইনে, আপনাকেও থাকতে হবে</li>
-                        <li>ডাটা ও রিপোর্টিং – সেলস, কাস্টমার ও মার্কেট ট্রেন্ড সম্পর্কে পরিষ্কার ধারণা পাবেন</li>
-                    </ul>
-                    
-                    <h2>📊 আমাদের ই-কমার্স সলিউশন সার্ভিসে যা পাবেন</h2>
-                    
-                    <ul class="service-list">
-                        <li>ই-কমার্স ওয়েবসাইট/অনলাইন শপ ডিজাইন</li>
-                        <li>প্রোডাক্ট ক্যাটালগ ও ইনভেন্টরি ম্যানেজমেন্ট</li>
-                        <li>পেমেন্ট গেটওয়ে ইন্টিগ্রেশন</li>
-                        <li>কুরিয়ার ও ডেলিভারি সিস্টেম সেটআপ</li>
-                        <li>মোবাইল-ফ্রেন্ডলি ডিজাইন</li>
-                        <li>সেলস রিপোর্টিং ও অ্যানালাইসিস</li>
-                    </ul>
-                    
-                    <a href="#" class="back-btn" onclick="showHomePage()"><i class="fas fa-arrow-left"></i> সেবাসমূহে ফিরে যান</a>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Branding Service Detail -->
-        <div id="branding" class="service-detail">
-            <div class="container">
-                <div class="service-header">
-                    <h1>ব্র্যান্ডিং</h1>
-                    <p>আপনার ব্যবসার পরিচয়, ইমেজ এবং কাস্টমারের কাছে আপনার ব্র্যান্ডের অবস্থান তৈরি করুন</p>
-                </div>
-                
-                <div class="video-container">
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/e3UoznO5yZ4?si=vlOyU_DT3navrVfl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                </div>
-                
-                <div class="service-content">
-                    <h2>ব্র্যান্ডিং কী?</h2>
-                    <p>ব্র্যান্ডিং হলো আপনার ব্যবসার পরিচয়, ইমেজ এবং কাস্টমারের কাছে আপনার ব্র্যান্ডের অবস্থান তৈরি করার প্রক্রিয়া। এটি শুধু লোগো বা নাম নয়, বরং কাস্টমারের মনে আপনার ব্যবসার প্রতিচ্ছবি তৈরি করে।</p>
-                    
-                    <h2>🚀 কেন ব্র্যান্ডিং জরুরী?</h2>
-                    
-                    <ul class="service-list">
-                        <li>বিপণনে আলাদা পরিচয় দেয় – আপনার ব্যবসা প্রতিযোগীর তুলনায় আলাদা হয়ে দাঁড়ায়</li>
-                        <li>কাস্টমারের বিশ্বাস তৈরি করে – ভালো ব্র্যান্ড ইমেজ মানেই কাস্টমারের আস্থা বৃদ্ধি</li>
-                        <li>সেলস ও লয়্যালটি বাড়ায় – বিশ্বাসী গ্রাহক বেশি সময় ধরে আপনার প্রোডাক্ট ব্যবহার করবে</li>
-                        <li>মার্কেট রিকগনিশন বৃদ্ধি করে – মানুষ সহজেই আপনার ব্র্যান্ড চিনতে পারবে</li>
-                        <li>লং-টার্ম ব্যবসার উন্নতি – ব্র্যান্ড শক্ত হলে নতুন প্রোডাক্ট বা সার্ভিস লঞ্চ করা সহজ</li>
-                    </ul>
-                    
-                    <h2>📊 আমাদের ব্র্যান্ডিং সার্ভিসে যা পাবেন</h2>
-                    
-                    <ul class="service-list">
-                        <li>লোগো ও ভিজ্যুয়াল আইডেন্টিটি ডিজাইন</li>
-                        <li>ব্র্যান্ড কালার, ফন্ট ও স্টাইল গাইডলাইন</li>
-                        <li>সোশ্যাল মিডিয়া ব্র্যান্ডিং</li>
-                        <li>প্রোডাক্ট প্যাকেজিং ও লেবেল ডিজাইন</li>
-                        <li>ব্র্যান্ড কনসালটেশন ও স্ট্র্যাটেজি</li>
-                    </ul>
-                    
-                    <a href="#" class="back-btn" onclick="showHomePage()"><i class="fas fa-arrow-left"></i> সেবাসমূহে ফিরে যান</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Skill Zone with Noakhali</h3>
-                <p>নোয়াখালীর সেরা ডিজিটাল মার্কেটিং এজেন্সি। আপনার ব্যবসার সাফল্য আমাদের প্রায়োরিটি।</p>
-                <div class="social-links">
-                    <a href="https://www.facebook.com/share/1YTAUUv377/" target="_blank" title="Facebook">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="https://wa.me/8801765486142" target="_blank" title="WhatsApp">
-                        <i class="fab fa-whatsapp"></i>
-                    </a>
-                    <a href="mailto:skillzonenoakhali@gmail.com" title="Email">
-                        <i class="fas fa-envelope"></i>
-                    </a>
-                    <a href="https://www.youtube.com/@SkillzonewithNoakhali" target="_blank" title="YouTube">
-                        <i class="fab fa-youtube"></i>
-                    </a>
-                </div>
-            </div>
-            
-            <div class="footer-section">
-                <h3>যোগাযোগ</h3>
-                <p><i class="fas fa-map-marker-alt"></i> সদর, নোয়াখালী, বাংলাদেশ</p>
-                <p><i class="fas fa-phone"></i> <a href="tel:+8801765486142" style="color: white;">01765486142</a></p>
-                <p><i class="fas fa-envelope"></i> <a href="mailto:skillzonenoakhali@gmail.com" style="color: white;">skillzonenoakhali@gmail.com</a></p>
-            </div>
-            
-            <div class="footer-section">
-                <h3>দ্রুত লিংক</h3>
-                <p><a href="#home" style="color: white; text-decoration: none;" onclick="showHomePage()">হোম</a></p>
-                <p><a href="#services" style="color: white; text-decoration: none;" onclick="showHomePage()">সেবাসমূহ</a></p>
-                <p><a href="#contact" style="color: white; text-decoration: none;" onclick="showHomePage()">যোগাযোগ</a></p>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>&copy; ২০২৫ Skill Zone with Noakhali। সকল অধিকার সংরক্ষিত।</p>
-        </div>
-    </footer>
-
-    <!-- WhatsApp Floating Button -->
-    <a href="https://wa.me/8801765486142" class="whatsapp-float" target="_blank" title="WhatsApp এ মেসেজ করুন">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-
-    <script>
-        // Mobile Menu Toggle
-        function toggleMenu() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('active');
-        }
-
-        // Smooth scroll for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-                // Close mobile menu after click
-                document.getElementById('navLinks').classList.remove('active');
-            });
-        });
-
-        // Scroll to contact section
-        function scrollToContact() {
-            document.getElementById('contact').scrollIntoView({
-                behavior: 'smooth'
-            });
-        }
-
-        // Form submission handling
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form data
-            const formData = new FormData(this);
-            const name = formData.get('name');
-            const email = formData.get('email');
-            const phone = formData.get('phone');
-            const message = formData.get('message');
-            
-            // Create WhatsApp message
-            const whatsappMessage = `নতুন যোগাযোগ:\n\nনাম: ${name}\nইমেইল: ${email}\nফোন: ${phone}\nমেসেজ: ${message}`;
-            
-            // Encode message for URL
-            const encodedMessage = encodeURIComponent(whatsappMessage);
-            
-            // Send to WhatsApp
-            window.open(`https://wa.me/8801765486142?text=${encodedMessage}`, '_blank');
-            
-            // Show success message
-            alert(`ধন্যবাদ ${name}! আপনার মেসেজটি আমরা পেয়েছি। শীঘ্রই আমরা আপনার সাথে যোগাযোগ করব।`);
-            
-            // Reset form
-            this.reset();
-        });
-
-        // Navbar background change on scroll
-        window.addEventListener('scroll', function() {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 100) {
-                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-                navbar.style.backdropFilter = 'blur(10px)';
-            } else {
-                navbar.style.background = '#ffffff';
-                navbar.style.backdropFilter = 'none';
-            }
-        });
-
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', function(e) {
-            const navLinks = document.getElementById('navLinks');
-            const menuBtn = document.querySelector('.mobile-menu-btn');
-            if (!menuBtn.contains(e.target) && !navLinks.contains(e.target)) {
-                navLinks.classList.remove('active');
-            }
-        });
-
-        // Service Detail Page Functions
-        function showServiceDetail(serviceId) {
-            document.getElementById('homePage').style.display = 'none';
-            document.getElementById('serviceDetailPage').style.display = 'block';
-            
-            // Hide all service details
-            const serviceDetails = document.querySelectorAll('#serviceDetailPage > div');
-            serviceDetails.forEach(service => {
-                service.style.display = 'none';
-            });
-            
-            // Show selected service detail
-            document.getElementById(serviceId).style.display = 'block';
-            
-            // Scroll to top
-            window.scrollTo(0, 0);
-        }
-        
-        function showHomePage() {
-            document.getElementById('homePage').style.display = 'block';
-            document.getElementById('serviceDetailPage').style.display = 'none';
-            
-            // Scroll to top
-            window.scrollTo(0, 0);
-        }
-
-        // Browser back button handling
-        window.addEventListener('popstate', function(event) {
-            if (document.getElementById('serviceDetailPage').style.display === 'block') {
-                showHomePage();
-            }
-        });
-
-        // Update history when navigating to service details
-        function showServiceDetail(serviceId) {
-            document.getElementById('homePage').style.display = 'none';
-            document.getElementById('serviceDetailPage').style.display = 'block';
-            
-            // Hide all service details
-            const serviceDetails = document.querySelectorAll('#serviceDetailPage > div');
-            serviceDetails.forEach(service => {
-                service.style.display = 'none';
-            });
-            
-            // Show selected service detail
-            document.getElementById(serviceId).style.display = 'block';
-            
-            // Add to browser history
-            history.pushState({page: 'service'}, '', `#${serviceId}`);
-            
-            // Scroll to top
-            window.scrollTo(0, 0);
-        }
-        
-        function showHomePage() {
-            document.getElementById('homePage').style.display = 'block';
-            document.getElementById('serviceDetailPage').style.display = 'none';
-            
-            // Add to browser history
-            history.pushState({page: 'home'}, '', '#home');
-            
-            // Scroll to top
-            window.scrollTo(0, 0);
-        }
-
-        // Initialize history state
-        history.replaceState({page: 'home'}, '', '#home');
-    </script>
-</body>
-</html>
+                <div class="tools-grid">
+                    <div class="tool-card facebook">
+                        <div class
